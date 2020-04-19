@@ -37,6 +37,11 @@ public class User implements UserDetails {
 //    @Pattern(regexp = "(?=\\D*\\d)(?=[^a-z]*[a-z])(?=[^A-Z]*[A-Z]).{8,12}")
     private String password;
 
+    public User(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Collections.singleton(Role.USER);
