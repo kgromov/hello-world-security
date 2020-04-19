@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
-      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
     <head>
         <title>Login Page</title>
     </head>
@@ -8,11 +7,6 @@
         <h1>Login Page</h1>
         <!--/*@thymesVar id="errorMessage" type="java.lang.String"*/-->
         <div class="alert" th:if="${errorMessage}" th:text="${errorMessage}"></div>
-        <!--<div th:if="${param.error}">
-            Invalid username and password.
-          &lt;!&ndash;  &lt;!&ndash;/*@thymesVar id="exception" type="java.lang.Throwable"*/&ndash;&gt;
-            <p th:text="${exception.getMessage()}"></p>&ndash;&gt;
-        </div>-->
         <form th:action="@{/login}" method="post">
             <div><label> User Name: <input type="text" name="username"/> </label></div>
             <div><label> Password: <input type="password" name="password"/> </label></div>

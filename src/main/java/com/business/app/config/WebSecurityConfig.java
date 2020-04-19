@@ -9,13 +9,9 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 
-import javax.sql.DataSource;
-
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-//    @Autowired
-//    private DataSource dataSource;
     @Autowired
     private UserService userService;
 
@@ -39,10 +35,5 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userService)
                 .passwordEncoder(NoOpPasswordEncoder.getInstance());
-      /*  auth.jdbcAuthentication()
-//                .dataSource(dataSource)
-                .passwordEncoder(NoOpPasswordEncoder.getInstance())
-                .usersByUsernameQuery("select user_name, password, true as active from user where user_name=?")
-                .authoritiesByUsernameQuery("select user_name, password, true as active  from user where user_name=?");*/
     }
 }

@@ -36,7 +36,7 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.singleton((GrantedAuthority) () -> "USER");
+        return Collections.singleton(Role.USER);
     }
 
     @Override
