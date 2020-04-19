@@ -3,6 +3,7 @@ package com.business.app.domain;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.validator.constraints.Length;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -12,7 +13,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotBlank;
 import java.util.Collection;
 import java.util.Collections;
 
@@ -26,11 +27,13 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @NotEmpty
+    @NotBlank(message = "User name cannot be empty")
+    @Length(max = 32, message = "User name should not be more than 32 characters")
     @Column(name = "user_name", unique = true, nullable = false)
     private String username;
 
-    @NotEmpty
+    @NotBlank(message = "Password cannot be empty")
+//    @Length(max = 16, message = "Password should not be more than 16 characters")
 //    @Pattern(regexp = "(?=\\D*\\d)(?=[^a-z]*[a-z])(?=[^A-Z]*[A-Z]).{8,12}")
     private String password;
 
