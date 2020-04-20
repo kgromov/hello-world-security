@@ -54,7 +54,7 @@ public class RegistrationDataValidationTest {
     }
 
     @Test
-    public void longName() throws Exception {
+    public void longUserName() throws Exception {
         this.mockMvc.perform(post("/registration")
                 .param("username", "Johann Ludwig Heinrich Julius Schliemann")
                 .param("password", "qwerty")
