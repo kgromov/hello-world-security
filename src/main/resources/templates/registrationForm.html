@@ -1,16 +1,52 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
     <head>
+        <meta charset="UTF-8"/>
         <title>Registration Page</title>
     </head>
     <body>
-        <h1>Registration Page</h1>
+    <h1>Registration Page</h1>
         <!--/*@thymesVar id="userName" type="java.lang.String"*/-->
         <div th:if="${userName}">User <b th:text="${userName}"></b> already exists!<br> </div>
-        <form th:action="@{/registration}" method="post">
-            <div><label> User Name: <input type="text" name="username"/> </label></div>
-            <div><label> Password: <input type="password" name="password"/> </label></div>
-            <div><input type="submit" value="Create user"/></div>
+        <!--/*@thymesVar id="user" type="com.business.app.domain.User"*/-->
+        <form th:object="${user}" th:action="@{/registration}" method="post">
+            <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
+                <p>Please Correct Errors Below</p>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-3 form-group" th:class="${#fields.hasErrors('username')}
+                                ? 'col-md-3 form-group has-error' : 'col-md-3 form-group'">
+                        <label>User Name:</label>
+                        <input type="text" class="form-control" name="username" th:field="*{username}" th:errorclass="has-error"/>
+                        <span class="help-block" th:if="${#fields.hasErrors('username')}">
+                             <ul>
+                                  <li th:each="err : ${#fields.errors('username')}" th:text="${err}"/>
+                             </ul>
+                        </span>
+                    </div>
+                   <!-- <div>
+                        <label> User Name:
+                            <input type="text" name="username"/> </label>
+                    </div>-->
+                </div>
+                <div class="row">
+                    <div class="col-md-3 form-group" th:class="${#fields.hasErrors('password')}
+                                ? 'col-md-3 form-group has-error' : 'col-md-3 form-group'">
+                        <label>Password:</label>
+                        <input type="password" class="form-control" name="password" th:field="*{password}" th:errorclass="has-error"/>
+                        <span class="help-block" th:if="${#fields.hasErrors('password')}">
+                             <ul>
+                                  <li th:each="err : ${#fields.errors('password')}" th:text="${err}"/>
+                             </ul>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+           <!-- <div><label> Password: <input type="password" name="password"/> </label></div>
+            <div><input type="submit" value="Create user"/></div>-->
+            <button type="submit" class="btn btn-primary">Create user</button>
         </form>
     </body>
 </html>
