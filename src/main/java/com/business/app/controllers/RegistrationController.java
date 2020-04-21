@@ -33,7 +33,7 @@ public class RegistrationController {
         log.info("Navigate to registration page for user {}", user.getUsername());
 
         if (bindingResult.hasErrors()) {
-            log.info("Registration form contains errors:");
+            log.warn("Registration form contains errors:");
             bindingResult.getAllErrors().forEach(error -> log.warn("{}", error));
             return "registrationForm";
         }

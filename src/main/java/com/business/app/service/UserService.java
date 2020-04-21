@@ -34,7 +34,7 @@ public class UserService implements UserDetailsService {
         Optional<User> userFromDb = repository.findByUsername(user.getUsername());
         if (userFromDb.isPresent())
         {
-            log.info("User {} already exists!", user.getUsername());
+            log.warn("User {} already exists!", user.getUsername());
             return false;
         }
         log.info("Create new user");

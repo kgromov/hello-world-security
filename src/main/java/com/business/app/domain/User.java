@@ -33,8 +33,6 @@ public class User implements UserDetails {
     private String username;
 
     @NotBlank(message = "Password cannot be empty")
-//    @Length(max = 16, message = "Password should not be more than 16 characters")
-//    @Pattern(regexp = "(?=\\D*\\d)(?=[^a-z]*[a-z])(?=[^A-Z]*[A-Z]).{8,12}")
     private String password;
 
     public User(String username, String password) {

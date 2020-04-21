@@ -42,7 +42,7 @@
                                th:class="${#fields.hasErrors('password')} ? 'form-control  is-invalid' : 'form-control  is-valid'"/>
                         <div class="invalid-feedback">
                             <ul>
-                                <li th:each="err : ${#fields.errors('username')}" th:text="${err}"></li>
+                                <li th:each="err : ${#fields.errors('password')}" th:text="${err}"></li>
                             </ul>
                         </div>
                     </div>

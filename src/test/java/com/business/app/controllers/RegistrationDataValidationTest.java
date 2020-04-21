@@ -8,8 +8,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.containsStringIgnoringCase;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
@@ -20,12 +23,11 @@ public class RegistrationDataValidationTest {
     @Autowired
     private MockMvc mockMvc;
 
-
     @Test
     public void createAnotherUser() throws Exception {
         this.mockMvc.perform(post("/registration")
                 .param("username", "jonh")
-                .param("password", "quewrty")
+                .param("password", "qwerty")
                 .with(csrf()))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/login"));
@@ -38,8 +40,7 @@ public class RegistrationDataValidationTest {
                 .param("password", "123")
                 .with(csrf()))
                 .andExpect(view().name("registrationForm"))
-//                .andExpect(content().string(containsString("Please correct errors below")))
-        ;
+                .andExpect(content().string(containsString("User name cannot be empty")))        ;
     }
 
     @Test
@@ -49,8 +50,7 @@ public class RegistrationDataValidationTest {
                 .param("password", "")
                 .with(csrf()))
                 .andExpect(view().name("registrationForm"))
-//                .andExpect(content().string(containsString("Please correct errors below")))
-        ;
+                .andExpect(content().string(containsString("Password cannot be empty")));
     }
 
     @Test
@@ -60,7 +60,7 @@ public class RegistrationDataValidationTest {
                 .param("password", "qwerty")
                 .with(csrf()))
                 .andExpect(view().name("registrationForm"))
-//                .andExpect(content().string(containsString("Please correct errors below")))
+                .andExpect(content().string(containsStringIgnoringCase("User name should not be more than 32 characters")))
         ;
     }
 }
