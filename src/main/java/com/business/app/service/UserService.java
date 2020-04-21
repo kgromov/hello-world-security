@@ -24,7 +24,6 @@ public class UserService implements UserDetailsService {
     }
 
     @Override
-    // TODO: doubts: exception in log but correct message or 'Bad credentials  without stacktrace in log'
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return repository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException(String.format("User %s is not found", username)));
