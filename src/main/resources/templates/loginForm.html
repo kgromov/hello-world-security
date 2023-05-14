@@ -2,35 +2,37 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
     <head>
         <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <link rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0/css/bootstrap.min.css}" />
+        <link rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0/css/bootstrap.min.css}"/>
+        <link rel="stylesheet" type="text/css" th:href="@{/styles/main.scss}"/>
         <title>Login Page</title>
     </head>
     <body>
-        <h1>Login Page</h1>
-        <div class="container-fluid" style="margin-top: 20px">
+        <div class="card-body m-5">
+            <h2>Login Page</h2>
             <form th:action="@{/login}" method="post">
                 <!--/*@thymesVar id="errorMessage" type="java.lang.String"*/-->
                 <div class="alert alert-danger" th:if="${errorMessage}" th:text="${errorMessage}"></div>
                 <div class="panel-body">
-                    <div class="row">
+<!--                    <div class="row">-->
                         <div class="col-md-3 form-group">
-                            <label>User Name:</label>
-                            <input type="text" name="username" class="form-control is-valid"/>
+                            <label for="username">User Name:</label>
+                            <input id="username" type="text" name="username" class="form-control is-valid"/>
                         </div>
-                    </div>
-                    <div class="row">
+<!--                    </div>-->
+<!--                    <div class="row">-->
                         <div class="col-md-3 form-group">
-                            <label>Password:</label>
-                            <input type="password" name="password" class="form-control is-valid"/>
-                        </div>
-                    </div>
+                            <label for="password">Password:</label>
+                            <input id="password" type="password" name="password" class="form-control is-valid"/>
+                         </div>
+<!--                    </div>-->
                 </div>
                 <button type="submit" class="btn btn-primary">Sign In</button>
+                <a th:href="@{/registration}" class="btn btn-primary" role="button">Register</a>
             </form>
-           <a th:href="@{/registration}">Add new user</a>
         </div>
         <script th:src="@{/webjars/jquery/3.0.0/jquery.min.js}"></script>
         <script th:src="@{/webjars/popper.js/1.11.1/dist/popper.min.js}"></script>
         <script th:src="@{/webjars/bootstrap/4.0.0/js/bootstrap.min.js}"></script>
+        <script th:src="@{/scripts/login.js}" type="text/javascript" charset="utf-8"></script>
     </body>
 </html>

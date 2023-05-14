@@ -1,54 +1,66 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
     <head>
-        <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <link rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0/css/bootstrap.min.css}" />
+        <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+        <link rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0/css/bootstrap.min.css}"/>
+        <link rel="stylesheet" type="text/css" th:href="@{/styles/main.scss}"/>
         <title>Registration Page</title>
     </head>
     <body>
-    <h1>Registration Page</h1>
-    <!--/*@thymesVar id="user" type="com.business.app.domain.User"*/-->
-    <div class="container-fluid" style="margin-top: 20px">
-        <form th:object="${user}" th:action="@{/registration}" method="post">
-            <!--/*@thymesVar id="userName" type="java.lang.String"*/-->
-            <div th:if="${userName}" class="alert alert-danger">
-                <p>User <b th:text="${userName}"></b> already exists!<br> </p>
-            </div>
-            <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
-                <p>Please Correct Errors Below</p>
-            </div>
-            <div class="panel-body">
-                <div class="row">
-                    <div class="col-md-3 form-group">
-                        <label>User Name:</label>
-                        <input type="text"
-                               th:class="${#fields.hasErrors('username')} ? 'form-control is-invalid' : 'form-control is-valid'"
-                               name="username" th:field="*{username}">
-                        <div class="invalid-feedback">
-                            <ul>
-                                <li th:each="err : ${#fields.errors('username')}" th:text="${err}"></li>
-                            </ul>
+        <!--/*@thymesVar id="user" type="com.business.app.domain.User"*/-->
+        <div class="card-body m-5">
+            <h2>Registration Page</h2>
+            <form th:object="${user}" th:action="@{/registration}" method="post">
+                <!--/*@thymesVar id="userName" type="java.lang.String"*/-->
+                <div th:if="${userName}" class="alert alert-danger">
+                    <p>User <b th:text="${userName}"></b> already exists!<br></p>
+                </div>
+                <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
+                    <p>Please Correct Errors Below</p>
+                </div>
+                <div class="panel-body">
+<!--                    <div class="row">-->
+                        <div class="col-md-3 form-group">
+                            <label for="username">User Name:</label>
+                            <input id="username" name="username" type="text"
+                                   th:class="${#fields.hasErrors('username')} ? 'form-control is-invalid' : 'form-control is-valid'"
+                                   th:field="*{username}">
+                            <div class="invalid-feedback">
+                                <ul>
+                                    <li th:each="err : ${#fields.errors('username')}" th:text="${err}"></li>
+                                </ul>
+                            </div>
+                        </div>
+<!--                    </div>-->
+<!--                    <div class="row">-->
+                        <div class="col-md-3 form-group">
+                            <label for="password">Password:</label>
+                            <input id="password" type="password" name="password" th:field="*{password}"
+                                   th:class="${#fields.hasErrors('password')} ? 'form-control is-invalid' : 'form-control is-valid'"/>
+                            <div class="strength">
+                                <ul class="strengthBar mt-2">
+                                    <li class="strength-item"></li>
+                                    <li class="strength-item"></li>
+                                    <li class="strength-item"></li>
+                                    <li class="strength-item"></li>
+                                </ul>
+                                <span class="status"></span>
+                                <p class="text-center mb-0 strength-summary"></p>
+                            </div>
+                            <div class="invalid-feedback">
+                                <ul>
+                                    <li th:each="err : ${#fields.errors('password')}" th:text="${err}"></li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-3 form-group">
-                        <label>Password:</label>
-                        <input type="password" name="password" th:field="*{password}"
-                               th:class="${#fields.hasErrors('password')} ? 'form-control  is-invalid' : 'form-control  is-valid'"/>
-                        <div class="invalid-feedback">
-                            <ul>
-                                <li th:each="err : ${#fields.errors('password')}" th:text="${err}"></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <button type="submit" class="btn btn-primary">Create user</button>
-        </form>
-    </div>
-    <script th:src="@{/webjars/jquery/3.0.0/jquery.min.js}"></script>
-    <script th:src="@{/webjars/popper.js/1.11.1/dist/popper.min.js}"></script>
-    <script th:src="@{/webjars/bootstrap/4.0.0/js/bootstrap.min.js}"></script>
+<!--                </div>-->
+                <button type="submit" class="btn btn-primary">Create user</button>
+            </form>
+        </div>
+        <script th:src="@{/webjars/jquery/3.0.0/jquery.min.js}"></script>
+        <script th:src="@{/webjars/popper.js/1.11.1/dist/popper.min.js}"></script>
+        <script th:src="@{/webjars/bootstrap/4.0.0/js/bootstrap.min.js}"></script>
+        <script th:src="@{/scripts/login.js}" type="text/javascript" charset="utf-8"></script>
     </body>
 </html>
