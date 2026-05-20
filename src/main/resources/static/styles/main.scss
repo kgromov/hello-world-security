@@ -1,37 +1,31 @@
-.strength {
+.password-strength {
   display: flex;
   flex-direction: row;
+  margin: 5px 0;
 }
 
-.strengthBar {
-  display: flex;
-  flex-grow: 1;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  vertical-align: 2px;
-}
-
-.strength-item:last-of-type {
+.password-strength-item:last-of-type {
   margin: 0 !important;
 }
 
-.strength-item {
-  background: #ddd;
-  border-radius: 2px;
-  display: inline-block;
-  height: 5px;
+.password-strength-item {
   margin-right: 1px;
-  flex-grow: 1;
+  width: 20%;
 }
 
-.strength-summary {
+.password-status {
+ font-size: smaller;
+  text-align: end;
+}
+
+.password-errors {
   font-weight: bold;
   flex-grow: 0.1;
+  margin-bottom: 0;
+  text-align: center;
+  color: red;
 }
 
-.valid-password-icon {
-  padding-right: 25px;
-  background: url("https://my-icon.png") no-repeat right;
-  background-size: 20px;
+.is-invalid {
+  border-color: red;
 }

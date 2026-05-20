@@ -12,8 +12,6 @@ $("#password").keyup(() => validatePassword());
 const colors = ['darkred', 'orangered', 'orange', 'yellowgreen'];
 const statuses = ['Poor', 'Weak', 'Average', 'Good'];
 
-$(".strength-summary").text("Loaded!!!");
-
 function validatePassword() {
     let passwordField = $("#password");
     const password = passwordField.val();
@@ -33,9 +31,10 @@ function validatePassword() {
 function validateLength(password) {
     const minLengthFailed = password.length < 8;
     if (minLengthFailed) {
-        const summary = $(".strength-summary");
-        summary.text("Password must be at least 8 characters long");
-        summary.css("color", "red");
+        const passwordErrors = $(".password-errors");
+        passwordErrors.show();
+        passwordErrors.text("Password must be at least 8 characters long");
+        passwordErrors.css("color", "red");
         $("#password").addClass("is-invalid");
     }
     return !minLengthFailed;
@@ -43,13 +42,12 @@ function validateLength(password) {
 
 function validateStrength(password) {
     const regex = /[$-/:-?{-~!"^_@`\[\]]/g;
+    // TODO: add as validation errors list items
     const lowerLetters = /[a-z]+/.test(password);
     const upperLetters = /[A-Z]+/.test(password);
     const numbers = /[0-9]+/.test(password);
     const specialChars = regex.test(password);
-
     const checks = [lowerLetters, upperLetters, numbers, specialChars];
-
     let passedMatches = 0;
     for (const check of checks) {
         passedMatches += check === true ? 1 : 0;
@@ -58,29 +56,31 @@ function validateStrength(password) {
 }
 
 function updateStrengthItems(passedMatches) {
+    $(".password-strength").show();
     const dataIndex = Math.max(passedMatches - 1, 0);
     const color = colors[dataIndex];
-    const items = $(".strength-item");
+    const items = $(".password-strength-item");
     for (let i = 0; i < dataIndex + 1; i++) {
         items.eq(i).css("background-color", color);
     }
-    const status = $(".status");
+    const status = $(".password-status");
     status.text(statuses[dataIndex]);
     status.css("color", color);
 }
 
 function resetStrengthValidation() {
-    const summary = $(".strength-summary");
-    summary.text("");
-    summary.css("color", "");
+    const passwordErrors = $(".password-errors");
+    passwordErrors.text("");
+    passwordErrors.hide();
 
-    const items = $(".strength-item");
+    const items = $(".password-strength-item");
     for (let i = 0; i < items.length; i++) {
         items.eq(i).css("background-color", "");
         items.eq(i).css("color", "");
     }
 
-    const status = $(".status");
+    const status = $(".password-status");
     status.text("");
     status.css("color", "");
+    // $(".progress").hide();
 }
