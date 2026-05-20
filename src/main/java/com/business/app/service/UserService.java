@@ -29,11 +29,9 @@ public class UserService implements UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException(String.format("User %s is not found", username)));
     }
 
-    public boolean addUser(User user)
-    {
+    public boolean addUser(User user) {
         Optional<User> userFromDb = repository.findByUsername(user.getUsername());
-        if (userFromDb.isPresent())
-        {
+        if (userFromDb.isPresent()) {
             log.warn("User {} already exists!", user.getUsername());
             return false;
         }

@@ -31,7 +31,6 @@ public class RegistrationController {
     @PostMapping
     public String addUser(@Valid @ModelAttribute("user") User user, BindingResult bindingResult, Model model) {
         log.info("Navigate to registration page for user {}", user.getUsername());
-
         if (bindingResult.hasErrors()) {
             log.warn("Registration form contains errors:");
             bindingResult.getAllErrors().forEach(error -> log.warn("{}", error));

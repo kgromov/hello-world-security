@@ -22,7 +22,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private PasswordEncoder encoder;
 
     @Override
-    public void configure(WebSecurity web) throws Exception {
+    public void configure(WebSecurity web) {
         web
                 .ignoring()
                 .antMatchers("/css/**", "/scripts/**");
