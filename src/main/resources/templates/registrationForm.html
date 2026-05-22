@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0/css/bootstrap.min.css}"/>
-    <link rel="stylesheet" type="text/css" th:href="@{/styles/main.scss}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/styles/main.css}"/>
     <title>Registration Page</title>
 </head>
 <body>
@@ -36,15 +36,15 @@
                 <input id="password" type="password" name="password" th:field="*{password}"
                        th:class="${#fields.hasErrors('password')} ? 'form-control is-invalid' : 'form-control is-valid'"/>
 
-                <div class="password-strength">
-                    <div class="password-strength-bar">
-                        <div class="password-strength-item"></div>
-                        <div class="password-strength-item"></div>
-                        <div class="password-strength-item"></div>
-                        <div class="password-strength-item"></div>
+                <div class="password-strength" style="display:none; margin: 5px 0;">
+                    <div class="password-strength-bar" style="display:flex; gap:3px; height:8px; margin-bottom:4px;">
+                        <div class="password-strength-item" style="flex:1; height:8px; border-radius:3px; background-color:#e0e0e0;"></div>
+                        <div class="password-strength-item" style="flex:1; height:8px; border-radius:3px; background-color:#e0e0e0;"></div>
+                        <div class="password-strength-item" style="flex:1; height:8px; border-radius:3px; background-color:#e0e0e0;"></div>
+                        <div class="password-strength-item" style="flex:1; height:8px; border-radius:3px; background-color:#e0e0e0;"></div>
                     </div>
-                    <div class="password-status"></div>
-                    <ul class="password-errors"></ul>
+                    <div class="password-status" style="font-size:smaller; font-weight:600; text-align:right; display:block;"></div>
+                    <ul class="password-errors" style="font-size:smaller; font-weight:bold; color:red; padding-left:1.2rem; margin:4px 0 0;"></ul>
                 </div>
 
                 <div class="invalid-feedback">
