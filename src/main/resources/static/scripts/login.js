@@ -1,86 +1,80 @@
-/*$("#password").change(() => {
-    validatePassword();
-});*/
-
 $("#password").keyup(() => validatePassword());
-
-// $("#password").change(() => setTimeout(() => {
-//         validatePassword();
-//     }, 200)
-// );
 
 const colors = ['darkred', 'orangered', 'orange', 'yellowgreen'];
 const statuses = ['Poor', 'Weak', 'Average', 'Good'];
 
+const strengthChecks = [
+    { test: (p) => /[a-z]+/.test(p), message: 'Add lowercase letters' },
+    { test: (p) => /[A-Z]+/.test(p), message: 'Add uppercase letters' },
+    { test: (p) => /[0-9]+/.test(p), message: 'Add numbers' },
+    { test: (p) => /[$-/:-?{-~!"^_@`\[\]]/.test(p), message: 'Add special characters (e.g. !@#$)' },
+];
+
 function validatePassword() {
-    let passwordField = $("#password");
+    const passwordField = $("#password");
     const password = passwordField.val();
     resetStrengthValidation();
+
     if (password) {
         if (validateLength(password)) {
-            passwordField.removeClass("is-invalid");
-            passwordField.addClass("is-valid");
+            passwordField.removeClass("is-invalid").addClass("is-valid");
             validateStrength(password);
         }
     } else {
-        passwordField.removeClass("is-valid");
-        passwordField.removeClass("is-invalid");
+        passwordField.removeClass("is-valid").removeClass("is-invalid");
     }
 }
 
 function validateLength(password) {
-    const minLengthFailed = password.length < 8;
-    if (minLengthFailed) {
-        const passwordErrors = $(".password-errors");
-        passwordErrors.show();
-        passwordErrors.text("Password must be at least 8 characters long");
-        passwordErrors.css("color", "red");
-        $("#password").addClass("is-invalid");
+    const tooShort = password.length < 8;
+    if (tooShort) {
+        showErrors(['Password must be at least 8 characters long']);
+        $("#password").addClass("is-invalid").removeClass("is-valid");
+        $(".password-strength").css("display", "block");
     }
-    return !minLengthFailed;
+    return !tooShort;
 }
 
 function validateStrength(password) {
-    const regex = /[$-/:-?{-~!"^_@`\[\]]/g;
-    // TODO: add as validation errors list items
-    const lowerLetters = /[a-z]+/.test(password);
-    const upperLetters = /[A-Z]+/.test(password);
-    const numbers = /[0-9]+/.test(password);
-    const specialChars = regex.test(password);
-    const checks = [lowerLetters, upperLetters, numbers, specialChars];
+    const failed = [];
     let passedMatches = 0;
-    for (const check of checks) {
-        passedMatches += check === true ? 1 : 0;
+
+    for (const check of strengthChecks) {
+        if (check.test(password)) {
+            passedMatches++;
+        } else {
+            failed.push(check.message);
+        }
     }
+
     updateStrengthItems(passedMatches);
+    showErrors(failed);
+}
+
+function showErrors(messages) {
+    const errorList = $(".password-errors");
+    errorList.empty();
+    messages.forEach((msg) => errorList.append($('<li>').text(msg)));
 }
 
 function updateStrengthItems(passedMatches) {
-    $(".password-strength").show();
+    $(".password-strength").css("display", "block");
     const dataIndex = Math.max(passedMatches - 1, 0);
     const color = colors[dataIndex];
     const items = $(".password-strength-item");
-    for (let i = 0; i < dataIndex + 1; i++) {
+
+    // Reset all to grey first, then colour the active ones
+    items.css("background-color", "#e0e0e0");
+    for (let i = 0; i < passedMatches; i++) {
         items.eq(i).css("background-color", color);
     }
-    const status = $(".password-status");
-    status.text(statuses[dataIndex]);
-    status.css("color", color);
+
+    $(".password-status").text(statuses[dataIndex]).css("color", color);
 }
 
 function resetStrengthValidation() {
-    const passwordErrors = $(".password-errors");
-    passwordErrors.text("");
-    passwordErrors.hide();
-
-    const items = $(".password-strength-item");
-    for (let i = 0; i < items.length; i++) {
-        items.eq(i).css("background-color", "");
-        items.eq(i).css("color", "");
-    }
-
-    const status = $(".password-status");
-    status.text("");
-    status.css("color", "");
-    // $(".progress").hide();
+    $(".password-strength").css("display", "none");
+    $(".password-strength-item").css("background-color", "#e0e0e0");
+    $(".password-status").text("").css("color", "");
+    $(".password-errors").empty();
 }
